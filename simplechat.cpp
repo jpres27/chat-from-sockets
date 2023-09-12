@@ -1,3 +1,7 @@
+// simplechat.cpp
+//
+// a server for running the simplechat messenging system
+
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -5,7 +9,7 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
-
+#include <errno.h>
 #include <netdb.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -14,7 +18,7 @@
 #include <arpa/inet.h>
 #include <poll.h>
 
-#define PORT "9024"   // Port we're listening on
+#define PORT "9025"   // Port we're listening on
 
 const unsigned int MAX_BUF_LEN = 4096;
 

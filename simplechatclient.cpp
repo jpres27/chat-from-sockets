@@ -17,7 +17,7 @@
 #include <poll.h>
 #include <fcntl.h>
 
-#define PORT "9024" // the port client will be connecting to 
+#define PORT "9025" // the port client will be connecting to 
 
 const unsigned int MAX_BUF_LEN = 4096;
 int sockfd;
@@ -139,7 +139,7 @@ int main(void) {
     //}
 
     inputpfd.fd = STDIN_FILENO;
-    inputpfd.events = POLLOUT;
+    inputpfd.events = POLLIN;
     inputpfd.revents = 0;
 
     serverpfd.fd = sockfd;
@@ -155,7 +155,7 @@ int main(void) {
             exit(1);
         }
 
-        for (auto i :pfds) {
+        for (auto i : pfds) {
             pollcount = poll(pfds.data(), pfds.size(), 5000);
             std::cout << "Calling poll() on pfds\n";
             if (pollcount == -1) {
@@ -166,7 +166,7 @@ int main(void) {
                 receive = getMsg(sockfd);
                 std::cout << receive << "\n";
             } 
-            if (i.revents & POLLOUT) {
+            if (i.revents & POLLIN) {
                 std::cout << "sockfd [" << i.fd << "] is ready to read\n";
                 std::cout << "polled socket is STDIN_FILENO\n";
                 std::getline(std::cin, send);
